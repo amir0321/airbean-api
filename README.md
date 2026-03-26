@@ -1,7 +1,7 @@
 > Senast uppdaterat: [2025-03-26]
 > Alla i gruppen har läst och godkänt: [
 Michael Jangstad
-Ameer Abdulkareem Shameel Shameel
+Ameer Shameel
 Luna Hjort
 Mattias Waern
 Samira Jama
