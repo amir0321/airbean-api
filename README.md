@@ -1,24 +1,31 @@
-> Senast uppdaterat: [ÅÅÅÅ-MM-DD]  
-> Alla i gruppen har läst och godkänt: [Namn 1], [Namn 2], …
+> Senast uppdaterat: [2025-03-26]
+> Alla i gruppen har läst och godkänt: [
+Michael Jangstad
+Ameer Abdulkareem Shameel Shameel
+Luna Hjort
+Mattias Waern
+Samira Jama
+]
 
 ---
 
 ## 🎯 Mål & Förarbete
 
-- **Betygsmål:** [Siktar vi på G eller VG? Ska vi bygga kampanjfunktionen?]
-- **Databas:** [Kör vi på SQLite (standard) eller är alla överens om att testa MongoDB?]
-- **Innan vi kodar:** [Vem ansvarar för att vi ritar E/R-diagrammet och kollar på API-dokumentationen först?]
+- **Betygsmål:** [VG]
+- **Databas:** [SQLite]
+- **Innan vi kodar:** [Ameer har ritat diagramet och vi har delat upp arbetet i Trello]
+- **Diagram Länk:** [https://drive.google.com/file/d/1fdIp8LuI1gRBrxnZZybHRp3Mg5SWijZz/view?usp=sharing]
 
 ---
 
 ## 💬 Möten & Arbetstider
 
-- **Daily standups:** [När ses vi? T.ex. vardagar 09:15, max 15 min – länk till möte om digitalt]
-- **Arbetstider (Core hours):** [Vilka tider förväntas alla vara tillgängliga för att svara/parprogrammera? T.ex. ti–to 09:00–15:00]
-- **Kanal för snabba frågor:** [Var skriver vi till varandra? T.ex. Slack / Discord]
-- **Svarstider:** [T.ex. "vi försöker svara inom ett par timmar på vardagar"]
+- **Daily standups:** [10:00 i vardagar max 15 minuter]
+- **Arbetstider (Core hours):** [09:00–15:00]
+- **Kanal för snabba frågor:** [Discord gruppchatt]
+- **Svarstider:** [Så fort vi kan]
 
-*(Fyll i: när kan ni räkna med att få tag på varandra utan att någon känner sig stressad?)*
+*(Fyll i: när kan ni räkna med att få tag på varandra utan att någon känner sig stressad? Från någon timme)*
 
 ---
 
@@ -29,16 +36,16 @@
 - **Pull Requests (PR):** [Minst X person måste kolla igenom koden innan vi klickar på merge till main]
 - **Om det blir Git-kaos:** [T.ex. "Vi raderar inget, utan ber läraren eller en klasskompis om hjälp med merge-konflikten"]
 
-*(Fyll i: hur undviker vi att `main` går sönder och hur stöttar vi varandra med koden?)*
+*(Fyll i: hur undviker vi att `main` går sönder och hur stöttar vi varandra med koden? Att skapa egna branch, merga och våga ställa frågor)*
 
 ---
 
 ## 📋 Agilt arbetssätt
 
-- **Vår tavla:** [Länk till GitHub Projects eller Trello]
-- **Uppdateringsrutin:** [T.ex. "Vi flyttar våra kort på tavlan varje morgon under vår standup"]
+- **Vår tavla:** [https://trello.com/invite/b/69c24e6adb6f614b02b24895/ATTI37bf19e636a4e4d78db97590d88389d77EAC02C6/grupp-7]
+- **Uppdateringsrutin:** [Vi flyttar kort så fort vi börjar jobba på dem, och när de är klara. Vi har en kort check-in på standup varje dag för att se till att tavlan är uppdaterad]
 - **User stories & tekniska tasks:** [Vem bryter ner kraven? Kom ihåg att skapa kort för backend-uppgifter som "Sätt upp Express" och "Validering"]
-- **När är en uppgift klar?** [T.ex. koden funkar, är testad manuellt i Postman, och PR är godkänd]
+- **När är en uppgift klar?** [När koden funkar, är testad, och när PR:n är godkänd och mergad till main]
 
 *(Fyll i: hur håller ni tavlan uppdaterad så alla vet vad som görs?)*
 
@@ -46,9 +53,9 @@
 
 ## 🛟 Problemlösning & Samarbete
 
-- **Om någon fastnar tekniskt:** [T.ex. "Sitt inte fast ensam i mer än 1 timme. Be om parprogrammering i chatten"]
-- **Att dela på jobbet:** [Hur ser vi till att alla får testa att bygga endpoints och skriva databasanrop?]
-- **Om någon blir sjuk eller saknas:** [Hur omfördelar vi uppgifter?]
+- **Om någon fastnar tekniskt:** [Vi försöker lösa det tillsammans, och om det inte funkar så tar vi hjälp av läraren eller en klasskompis]
+- **Att dela på jobbet:** [Vi försöker dela upp arbetet så att alla får vara med, och vi hjälper varandra när det behövs]
+- **Om någon blir sjuk eller saknas:** [Man meddelar så fort som möjligt i Discord, och vi försöker omfördela arbetet så att det inte blir för mycket för någon annan]
 - **Om samarbetet inte funkar:** [T.ex. ta upp det på standup direkt, eller ta in läraren som neutral part ifall det behövs]
 
 *(Fyll i: ni vill ha en trygg väg att lyfta problem tidigt, utan att det blir personligt.)*
@@ -59,9 +66,9 @@
 
 Vi har läst detta kontrakt och committerar oss till att följa det tills vi gemensamt uppdaterar det.
 
-| Namn | Datum | Signatur / OK |
-|------|-------|---------------|
-|      |       |               |
-|      |       |               |
-|      |       |               |
-|      |       |               |
+| Namn    | Datum      | Signatur / OK |
+|---------|------------|----|
+| Amir    | 2025-03-26 | OK |
+| Michael | 2025-03-26 | OK |
+| Luna    | 2025-03-26 | OK |
+| Mattias | 2025-03-26 | OK |
