@@ -33,8 +33,8 @@ Samira Jama
 
 - **Gyllene regeln:** **Ingen pushar direkt till `main`!** All kod görs i en egen branch.
 - **Branch-namn:** [T.ex. `feature/skapa-konto`, `fix/meny-bugg` – håll det enkelt]
-- **Pull Requests (PR):** [Minst X person måste kolla igenom koden innan vi klickar på merge till main]
-- **Om det blir Git-kaos:** [T.ex. "Vi raderar inget, utan ber läraren eller en klasskompis om hjälp med merge-konflikten"]
+- **Pull Requests (PR):** [Minst 2 person måste kolla igenom koden innan vi klickar på merge till main]
+- **Om det blir Git-kaos:** [Om det blir konflikter eller problem så tar vi det tillsammans, och om det inte funkar så tar vi hjälp av läraren eller en klasskompis]
 
 *(Fyll i: hur undviker vi att `main` går sönder och hur stöttar vi varandra med koden? Att skapa egna branch, merga och våga ställa frågor)*
 
