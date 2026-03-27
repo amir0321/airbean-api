@@ -1,0 +1,20 @@
+[
+  {
+    "id": "1",
+    "title": "Bryggkaffe",
+    "desc": "Bryggd på nymalda bönor.",
+    "price": 39
+  },
+  {
+    "id": "2",
+    "title": "Caffè Latte",
+    "desc": "Klassisk espresso med ångad mjölk.",
+    "price": 49
+  },
+  {
+    "id": "3",
+    "title": "Ostsmörgås",
+    "desc": "Smörgås med ost och grönsaker.",
+    "price": 29
+  }
+]
