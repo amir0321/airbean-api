@@ -4,6 +4,7 @@ const { v4: uuidv4} = require('uuid');
 function createOrder(req, res){
     const {userId, items, campaignId } = req.body;
 
+    // userId är valfritt, null om man är gäst
     const resolvedId = userId || null;
 
     // Beräknar totalpris på servern
