@@ -39,6 +39,7 @@ export async function createOrder(req, res) {
     message: 'Beställning lagd',
     orderNr,
     totalPrice,
+    // lägg till så man kan se namnet på produkten i orderbekräftelsen SENARE
     eta: `${eta} min`,
   });
 }
