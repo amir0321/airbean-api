@@ -53,6 +53,7 @@ async function setupDB() {
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         order_nr TEXT,
         product_id TEXT,
+        quantity INTEGER NOT NULL DEFAULT 1,
         FOREIGN KEY (order_nr) REFERENCES orders(order_nr),
         FOREIGN KEY (product_id) REFERENCES menu(id)
     )

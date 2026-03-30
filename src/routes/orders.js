@@ -1,8 +1,9 @@
-const express = require('express');
+import express from 'express';
+import { createOrder } from '../controllers/ordersController.js';
+//import { validateOrder } from '../middleware/orderValidation.js';
+
 const router = express.Router();
-const { createOrder } = require('../controllers/ordersController');
-const { validateOrder } = require('../middleware/orderValidation');
 
-router.post('/', validateOrder, createOrder);
+router.post('/', createOrder); //validateOrder middleware kan läggas till här när den är implementerad
 
-module.exports = router;
+export default router;
