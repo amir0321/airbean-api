@@ -1,10 +1,22 @@
 import sqlite3 from 'sqlite3';
 import { open } from 'sqlite';
 import fs from 'fs/promises';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const dbPath = path.join(__dirname, 'database', 'airbean.db');
+const menuPath = path.join(__dirname, 'database', 'menu.json');
+const dbDir = path.dirname(dbPath);
 
 async function setupDB() {
+
+    await fs.mkdir(dbDir, { recursive: true });
+
     const db = await open({
-        filename: './database/airbean.db',
+        filename: dbPath,
         driver: sqlite3.Database
     });
 
@@ -50,7 +62,7 @@ async function setupDB() {
 
     if (menuCheck.count === 0) {
         try {
-            const rawData = await fs.readFile('./database/menu.json', 'utf-8');
+            const rawData = await fs.readFile(menuPath, 'utf-8');
             const menuData = JSON.parse(rawData);
 
             for (const item of menuData) {
