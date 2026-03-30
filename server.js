@@ -1,14 +1,18 @@
 import express from 'express';
 import { setupDB } from "./db.js";
 
+import beansRouter from './src/routes/beans.js';
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 
 app.get('/', (req, res) => {
-    res.send('Airbean API is running');
+    res.json({ message: 'Välkommen till Airbean API!' });
 })
+
+app.use('/api/beans', beansRouter);
 
 async function startServer() {
     try {
@@ -18,7 +22,7 @@ async function startServer() {
         app.set('db', db);
 
         app.listen(PORT, () => {
-            console.log(`🚀 Airbean API körs på http://localhost:${PORT}`);
+            console.log(`Airbean API körs på http://localhost:${PORT}`);
         });
     } catch (error) {
         console.error('Misslyckades med att starta servern:', error);
