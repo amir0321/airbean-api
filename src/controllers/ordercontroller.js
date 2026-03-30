@@ -9,10 +9,12 @@ function createOrder(req, res){
 
     // Beräknar totalpris på servern
     let totalPrice = 0;
-    for(const item of items) {
-        const product = db.prepare('SELECT price FROM menu_items WHERE product_id = ? ').get(item.productId);
-        totalPrice += product.price * item.quantity;
-    }
+ for (const item of items) {
+    const product = db
+      .prepare('SELECT price FROM menu_items WHERE product_id = ?')
+      .get(item.productId);
+    totalPrice += product.price * item.quantity;
+  }
 
 
 
@@ -21,12 +23,20 @@ function createOrder(req, res){
 
     }
 
+    // Genererar unikt orderId
     const orderId = uuidv4();
+
+
+    // Förbereder SQL statements
     const insertOrder = db.prepare('INSERT INTO orders (order_id, user_id, total_price, campaign_id) VALUES (?, ?, ?, ?)');
+
+
+    // Förbereder SQL statement för order_items
     const insertItem = db.prepare('INSERT INTO order_items (order_id, product_id, quantity, unit_price) VALUES (?, ?, ?, ?)');
 
 
-    const createOrderTransaction = db.transaction(() => {
+    // Kör allt i en transaktion
+   db.transaction(() => {
         insertOrder.RUN(orderId, userId, totalPrice, campaignId || NULL)
 
         for(const item of items){
@@ -35,8 +45,8 @@ function createOrder(req, res){
         }
     });
 
-    createOrderTransaction();
 
+    // Skicka svar till klienten
     res.status(201).json({
         message: 'Beställning lagd',
         orderId,
@@ -47,24 +57,5 @@ function createOrder(req, res){
 }
 
 
-function getOrderHistory(req, res){
-    const {userId} = req.params;
 
-    const orders = db.prepare(`
-    SELECT o.order_id, o.created_at, o.total_price, o.status
-    FROM orders o
-    WHERE o.user_id = ?
-    ORDER BY o.created_at DESC
-  `).all(userId);
-
-  if(orders.length === 0){
-    return res.status(404).json({ message: 'Ingen beställningshistorik hittades för användaren.'})
-  }
-
-  const getItems = db.prepare(`
-    SELECT m.title, oi.quantity, oi.unit_price
-    FROM order_items oi
-    JOIN menu_items m ON oi.product_id = m.product_id
-    WHERE oi.order_id = ?
-  `);
-}
+module.exports = { createOrder,}
