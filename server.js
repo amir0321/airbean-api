@@ -2,7 +2,6 @@ import express from 'express';
 import { setupDB } from "./db.js";
 
 import beansRouter from './src/routes/beans.js';
-import ordersRouter from './src/routes/orders.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -14,7 +13,6 @@ app.get('/', (req, res) => {
 })
 
 app.use('/api/beans', beansRouter);
-app.use('/api/orders', ordersRouter);
 
 async function startServer() {
     try {
