@@ -16,6 +16,10 @@ export async function createOrder(req, res) {
     totalPrice += product.price * item.quantity;
   }
 
+  // Kampanjlogik kommer här SENARE
+
+  
+
   // Generera unikt ordernummer och beräkna ETA
 
   const orderNr = uuidv4();
