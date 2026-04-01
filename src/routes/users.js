@@ -28,4 +28,15 @@ router.post('/', async (req, res) => {
     }
 });
 
+router.get('/', async (req, res) => {
+    const db = req.app.get('db');
+    try {
+        const users = await db.all('SELECT * FROM users');
+        res.json(users);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Failed to retrieve users' });
+    }
+})
+
 export default router;
