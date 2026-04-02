@@ -1,5 +1,5 @@
 export function calculateTotal(cart){
-    if (!Array.isArray(caty) || cart.length === 0){
+    if (!Array.isArray(cart) || cart.length === 0){
         return { total: 0, baseTotal: 0, discountTotal: 0, applied: []}
     }
 

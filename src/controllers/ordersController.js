@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
-import { calculateTotal } from '../services/discountService';
+import { calculateTotal } from '../services/discountService.js';
 
 export async function createOrder(req, res) {
   const db = req.app.get('db');
