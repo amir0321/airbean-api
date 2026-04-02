@@ -13,7 +13,7 @@ export function calculateTotal(cart){
     const applied = [];
 
 
-    // Rabbatlogik för kaffe + macka
+    // Rabbatlogik för kaffe + macka, FINNS BARA RABATT LOGIK FÖR PRODUCT 1 OCH 3
     const harBryggKaffe = cart.some(line => line.productId  === '1' && line.qty > 0);
     const harOstmacka = cart.some(line => line.productId  === '3' && line.qty > 0);
     if(harBryggKaffe && harOstmacka){
