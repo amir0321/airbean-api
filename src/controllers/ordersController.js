@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
+import { calculateTotal } from '../services/discountService';
 
 export async function createOrder(req, res) {
   const db = req.app.get('db');
@@ -6,29 +7,28 @@ export async function createOrder(req, res) {
 
   const resolvedUserId = userId || null;
 
-  // Beräkna totalpris på servern
-  let totalPrice = 0;
-  for (const item of items) {
-    const product = await db.get(
-      'SELECT price FROM menu WHERE id = ?',
-      item.productId
-    );
-    totalPrice += product.price * item.quantity;
+  // Bygg en "cart" som calculateTotal kan använda
+  const cart = [];
+  for (const item of items){
+    const product = await db.get('SELECT id, price FROM menu WHERE id = ?', item.productId);
+    cart.push({
+      sku: product.id,
+      qty: item.quantity,
+      unitPirce: product.price
+    });
   }
 
-  // Kampanjlogik kommer här SENARE
-
-  
+  // Beräkna totalsumma och tillämpliga rabatter
+  const { total, baseTotal, discountTotal, applied } = calculateTotal(cart);
 
   // Generera unikt ordernummer och beräkna ETA
-
   const orderNr = uuidv4();
   const eta = 20;
 
   // Spara ordern
   await db.run(
     'INSERT INTO orders (order_nr, user_id, total_price, eta) VALUES (?, ?, ?, ?)',
-    orderNr, resolvedUserId, totalPrice, eta
+    orderNr, resolvedUserId, total, eta
   );
 
   // Spara orderraderna
@@ -42,8 +42,10 @@ export async function createOrder(req, res) {
   res.status(201).json({
     message: 'Beställning lagd',
     orderNr,
-    totalPrice,
-    // lägg till så man kan se namnet på produkten i orderbekräftelsen SENARE
+    baseTotal,
+    discountTotal,
+    totalPrice: total,
+    appliedDiscounts: applied,
     eta: `${eta} min`,
   });
 }
