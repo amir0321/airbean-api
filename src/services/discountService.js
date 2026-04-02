@@ -6,7 +6,7 @@ export function calculateTotal(cart){
     // Beräkna baspriset
     let baseTotal = 0;
     for(const line of cart){
-        baseTotal += line.qty * line.unitPirce;
+        baseTotal += line.qty * line.unitPrice;
     }
 
     let total = baseTotal;
@@ -14,8 +14,8 @@ export function calculateTotal(cart){
 
 
     // Rabbatlogik för kaffe + macka
-    const harBryggKaffe = cart.some(line => line.sku === '1' && line.qty > 0);
-    const harOstmacka = cart.some(line => line.sku === '3' && line.qty > 0);
+    const harBryggKaffe = cart.some(line => line.productId  === '1' && line.qty > 0);
+    const harOstmacka = cart.some(line => line.productId  === '3' && line.qty > 0);
     if(harBryggKaffe && harOstmacka){
         const rabatt = Math.round(total * 0.15);
         total -= rabatt;

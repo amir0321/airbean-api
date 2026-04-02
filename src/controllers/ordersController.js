@@ -12,9 +12,9 @@ export async function createOrder(req, res) {
   for (const item of items){
     const product = await db.get('SELECT id, price FROM menu WHERE id = ?', item.productId);
     cart.push({
-      sku: product.id,
+      productId: item.productId,
       qty: item.quantity,
-      unitPirce: product.price
+      unitPrice: product.price
     });
   }
 
