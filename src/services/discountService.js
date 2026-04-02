@@ -11,5 +11,17 @@ export function calculateTotal(cart){
     let total = baseTotal;
     const applied = [];
 
+
     
+    const harBryggKaffe = cart.some(line => line.sku === '1' && line.qty > 0);
+    const harOstmacka = cart.some(line => line.sku === '3' && line.qty > 0);
+    if(harBryggKaffe && harOstmacka){
+        const rabatt = Math.round(total * 0.15);
+        total -= rabatt;
+        applied.push({name: 'Bryggkaffe + Ostmacka', amount: rabatt});
+    }
+
+    if (total < 0) total = 0;
+
+    return {baseTotal, total, discountTotal: baseTotal - total, applied};
 }
