@@ -2,50 +2,53 @@ import { v4 as uuidv4 } from 'uuid';
 import { calculateTotal } from '../services/discountService.js';
 
 export async function createOrder(req, res) {
-  const db = req.app.get('db');
-  const { userId, items } = req.body;
+  try {
+    const db = req.app.get('db');
+    const { userId, items } = req.body;
 
-  const resolvedUserId = userId || null;
+    const resolvedUserId = userId || null;
 
-  // Bygg en "cart" som calculateTotal kan använda
-  const cart = [];
-  for (const item of items){
-    const product = await db.get('SELECT id, price FROM menu WHERE id = ?', item.productId);
-    cart.push({
-      productId: item.productId,
-      qty: item.quantity,
-      unitPrice: product.price
-    });
-  }
+    const cart = [];
+    for (const item of items) {
+      const product = await db.get('SELECT id, price FROM menu WHERE id = ?', item.productId);
+      if (!product) {
+        return res.status(404).json({ error: `Product with id ${item.productId} not found.` });
+      }
+      cart.push({
+        productId: item.productId,
+        qty: item.quantity,
+        unitPrice: product.price
+      });
+    }
 
-  // Beräkna totalsumma och tillämpliga rabatter
-  const { total, baseTotal, discountTotal, applied } = calculateTotal(cart);
+    const { total, baseTotal, discountTotal, applied } = calculateTotal(cart);
 
-  // Generera unikt ordernummer och beräkna ETA
-  const orderNr = uuidv4();
-  const eta = 20;
+    const orderNr = uuidv4();
+    const eta = 20;
 
-  // Spara ordern
-  await db.run(
-    'INSERT INTO orders (order_nr, user_id, total_price, eta) VALUES (?, ?, ?, ?)',
-    orderNr, resolvedUserId, total, eta
-  );
-
-  // Spara orderraderna
-  for (const item of items) {
     await db.run(
-      'INSERT INTO order_details (order_nr, product_id, quantity) VALUES (?, ?, ?)',
-      orderNr, item.productId, item.quantity
+        'INSERT INTO orders (order_nr, user_id, total_price, eta) VALUES (?, ?, ?, ?)',
+        [orderNr, resolvedUserId, total, eta]
     );
-  }
 
-  res.status(201).json({
-    message: 'Beställning lagd',
-    orderNr,
-    baseTotal,
-    discountTotal,
-    totalPrice: total,
-    appliedDiscounts: applied,
-    eta: `${eta} min`,
-  });
+    for (const item of items) {
+      await db.run(
+          'INSERT INTO order_details (order_nr, product_id, quantity) VALUES (?, ?, ?)',
+          [orderNr, item.productId, item.quantity]
+      );
+    }
+
+    res.status(201).json({
+      message: 'Beställning lagd',
+      orderNr,
+      baseTotal,
+      discountTotal,
+      totalPrice: total,
+      appliedDiscounts: applied,
+      eta: `${eta} min`,
+    });
+  } catch (error) {
+    console.error('Failed to create order:', error);
+    res.status(500).json({ error: 'Failed to process the order.' });
+  }
 }
