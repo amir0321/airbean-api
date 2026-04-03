@@ -32,7 +32,7 @@ async function setupDB() {
     await db.exec(`
     CREATE TABLE IF NOT EXISTS users (
         id TEXT PRIMARY KEY,
-        username TEXT NOT NULL,
+        username TEXT NOT NULL UNIQUE,
         email TEXT NOT NULL UNIQUE
     )
     `);
