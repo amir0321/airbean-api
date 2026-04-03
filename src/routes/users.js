@@ -20,6 +20,9 @@ router.post('/register', async (req, res) => {
         const newUser = await db.get('SELECT * FROM users WHERE id = ?', [userId]);
         res.status(201).json(newUser);
     } catch (error) {
+        if (error.message.includes('UNIQUE')) {
+            return res.status(400).json({ error: 'Email already exists' });
+        }
         if (error.message.includes('UNIQUE constraint failed: users.email')) {
             return res.status(400).json({ error: 'Email already exists' });
         }
@@ -42,13 +45,8 @@ router.get('/', async (req, res) => {
     }
 })
 
-router.put('/:id', async (req, res) => {
+router.delete('/:id', async (req, res) => {
     const { id } = req.params;
-    const { username, email } = req.body;
-
-    if (!username && !email) {
-        return res.status(400).json({ error: 'At least one field required: username or email.' });
-    }
 
     try {
         const db = req.app.get('db');
@@ -58,6 +56,14 @@ router.put('/:id', async (req, res) => {
             return res.status(404).json({ error: 'User not found.' });
         }
 
+        await db.run('DELETE FROM users WHERE id = ?', [id]);
+
+        res.json({ message: 'User account deleted.' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Failed to delete user' });
+    }
+})
         const newUsername = username ?? user.username;
         const newEmail = email ?? user.email;
 

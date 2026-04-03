@@ -5,6 +5,8 @@ import beansRouter from './src/routes/beans.js';
 import ordersRouter from './src/routes/orders.js';
 import usersRouter from './src/routes/users.js';
 
+import usersRouter from './src/routes/users.js';
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
