@@ -32,7 +32,7 @@ async function setupDB() {
     await db.exec(`
     CREATE TABLE IF NOT EXISTS users (
         id TEXT PRIMARY KEY,
-        username TEXT NOT NULL,
+        username TEXT NOT NULL UNIQUE,
         email TEXT NOT NULL UNIQUE
     )
     `);
@@ -53,6 +53,7 @@ async function setupDB() {
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         order_nr TEXT,
         product_id TEXT,
+        quantity INTEGER NOT NULL DEFAULT 1,
         FOREIGN KEY (order_nr) REFERENCES orders(order_nr),
         FOREIGN KEY (product_id) REFERENCES menu(id)
     )

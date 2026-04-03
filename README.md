@@ -4,7 +4,6 @@ Michael Jangstad
 Ameer Shameel
 Luna Hjort
 Mattias Waern
-Samira Jama
 ]
 
 ---

@@ -64,5 +64,20 @@ router.delete('/:id', async (req, res) => {
         res.status(500).json({ error: 'Failed to delete user' });
     }
 })
+        const newUsername = username ?? user.username;
+        const newEmail = email ?? user.email;
+
+        await db.run(
+            'UPDATE users SET username = ?, email = ? WHERE id = ?',
+            [newUsername, newEmail, id]
+        );
+
+        const updatedUser = await db.get('SELECT * FROM users WHERE id = ?', [id]);
+        res.json(updatedUser);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Failed to update user.' });
+    }
+});
 
 export default router;
