@@ -24,11 +24,19 @@ export async function createOrder(req, res) {
     const { total, baseTotal, discountTotal, applied } = calculateTotal(cart);
 
     const orderNr = uuidv4();
-    const eta = 20;
+    const etaInMinutes = Math.floor(Math.random() * (20 - 10 + 1)) + 10;
+
+    const now = new Date();
+    const deliveryTime = new Date(now.getTime() + etaInMinutes * 60000);
+
+    const deliveryTimeString = deliveryTime.toLocaleTimeString('sv-SE', {
+      hour: '2-digit',
+      minute: '2-digit'
+    });
 
     await db.run(
         'INSERT INTO orders (order_nr, user_id, total_price, eta) VALUES (?, ?, ?, ?)',
-        [orderNr, resolvedUserId, total, eta]
+        [orderNr, resolvedUserId, total, etaInMinutes]
     );
 
     for (const item of items) {
@@ -45,7 +53,7 @@ export async function createOrder(req, res) {
       discountTotal,
       totalPrice: total,
       appliedDiscounts: applied,
-      eta: `${eta} min`,
+      eta: deliveryTimeString,
     });
   } catch (error) {
     console.error('Failed to create order:', error);
