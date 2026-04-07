@@ -33,7 +33,14 @@ export function calculateTotal(cart){
     // Rabbatlogik för kaffeLatte + bryggKaffe, Logik för productID 1 OCH 2
     if(harLatte && harBryggKaffe){
         total -=20;
-        applied.push({name: 'Två kaffe', amount: 20})
+        applied.push({name: 'Två olika kaffesorter', amount: 20})
+    }
+
+    // Rabbatlogik för 2 ostmackor, rabbat appliceras om man beställer mer än 2 ostmackor
+    const ostmackaQty = cart.find(line => line.productId === '3')?.qty ?? 0;
+    if (ostmackaQty >= 2) {
+    total -= 29;
+    applied.push({ name: 'Dubbelmacka', amount: 29 });
     }
 
 
