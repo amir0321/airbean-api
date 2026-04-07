@@ -52,3 +52,6 @@ Rabatter appliceras automatiskt om beställningen innehåller rätt kombination,
 | Kampanj | Villkor | Rabatt |
 |---------|---------|--------|
 | Bryggkaffe + Ostmacka | Bryggkaffe (id: 1) + Ostsmörgås (id: 3) | 15% |
+| Kaffelatte  + Ostmacka | Kaffelatte (id: 2) + Ostsmörgås (id: 3) | 10% |
+| Bryggkaffe + Kaffelatte  | Bryggkaffe (id: 1) + Kaffelatte  (id: 2) | 20 kr |
+| Ostmacka + Ostmacka | Ostsmörgås (id: 3) qty > 2  | 29 kr |
