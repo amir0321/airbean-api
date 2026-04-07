@@ -13,7 +13,7 @@ export function calculateTotal(cart){
     const applied = [];
 
 
-    // Rabbatlogik för kaffe + macka, Logik för productID 1 OCH 3
+    // Rabattlogik för kaffe + macka, Logik för productID 1 OCH 3
     const harBryggKaffe = cart.some(line => line.productId  === '1' && line.qty > 0);
     const harOstmacka = cart.some(line => line.productId  === '3' && line.qty > 0);
     if(harBryggKaffe && harOstmacka){
@@ -22,7 +22,7 @@ export function calculateTotal(cart){
         applied.push({name: 'Bryggkaffe + Ostmacka', amount: rabatt});
     }
 
-    // Rabbatlogik för kaffeLatte + macka, Logik för productID 2 OCH 3
+    // Rabattlogik för kaffeLatte + macka, Logik för productID 2 OCH 3
     const harLatte = cart.some(line => line.productId === '2' && line.qty > 0);
     if (harLatte && harOstmacka){
         const rabatt = Math.round(total * 0.10);
@@ -30,13 +30,13 @@ export function calculateTotal(cart){
         applied.push({name: 'Latte + Ostmacka', amount: rabatt})
     }
 
-    // Rabbatlogik för kaffeLatte + bryggKaffe, Logik för productID 1 OCH 2
+    // Rabattlogik för kaffeLatte + bryggKaffe, Logik för productID 1 OCH 2
     if(harLatte && harBryggKaffe){
         total -=20;
         applied.push({name: 'Två olika kaffesorter', amount: 20})
     }
 
-    // Rabbatlogik för 2 ostmackor, rabbat appliceras om man beställer mer än 2 ostmackor
+    // Rabattlogik för 2 ostmackor, rabbat appliceras om man beställer mer än 2 ostmackor
     const ostmackaQty = cart.find(line => line.productId === '3')?.qty ?? 0;
     if (ostmackaQty >= 2) {
     total -= 29;
