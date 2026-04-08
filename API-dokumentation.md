@@ -162,15 +162,52 @@ Hämtar en lista över alla ordrar som lagts, inklusive gästordrar. **Notera:**
 
 ---
 
-### `GET /api/orders/:orderId/eta`
+### `GET /api/orders/details/:orderId`
+
+Hämtar detaljerad information för en specifik order.
+
+**URL-parametrar:**
+*   `orderId` (string, obligatorisk): Orderns unika nummer.
+
+**Response `200`:**
+```json
+{
+    "orderNr": "3d60bba0-0eaa-4673-a6c3-a27b85580b30",
+    "userId": "user_123",
+    "totalPrice": 91,
+    "orderTime": "2024-05-22T12:15:00.000Z",
+    "remainingEta": 15,
+    "status": "Drönare på väg",
+    "items": [
+        {
+            "title": "Bryggkaffe",
+            "quantity": 2,
+            "price": 39
+        },
+        {
+            "title": "Ostsmörgås",
+            "quantity": 1,
+            "price": 29
+        }
+    ]
+}
+```
+
+**Felkoder:**
+
+| Kod | Beskrivning |
+|-----|-------------|
+| 404 | Ordern hittades inte. |
+| 500 | Internt serverfel. |
+
+---
+
+### `GET /api/orders/status/:orderId`
 
 Hämtar aktuell status och återstående leveranstid (ETA) för en specifik order.
 
 **URL-parametrar:**
 *   `orderId` (string, obligatorisk): Orderns unika nummer.
-
-**Headers:**
-*   `x-user-id` (string, obligatorisk): Användarens unika ID.
 
 **Response `200`:**
 ```json
@@ -186,8 +223,8 @@ Hämtar aktuell status och återstående leveranstid (ETA) för en specifik orde
 
 | Kod | Beskrivning |
 |-----|-------------|
-| 400 | `x-user-id` eller `orderId` saknas. |
-| 404 | Ordern hittades inte för den angivna användaren. |
+| 400 | `orderId` saknas. |
+| 404 | Ordern hittades inte. |
 | 500 | Internt serverfel. |
 
 ---

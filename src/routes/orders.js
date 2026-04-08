@@ -56,6 +56,61 @@ router.get('/status/:orderId', async (req, res) => {
     }
 });
 
+// Hämta en specifik order med detaljer
+router.get('/details/:orderId', async (req, res) => {
+    const db = req.app.get('db');
+    const { orderId } = req.params;
+
+    try {
+        const orderHeader = await db.get(
+            `SELECT order_nr, user_id, total_price, eta, order_time
+             FROM orders
+             WHERE order_nr = ?`,
+            [orderId]
+        );
+
+        if (!orderHeader) {
+            return res.status(404).json({ message: 'Ordern hittades inte' });
+        }
+
+        const orderItems = await db.all(
+            `SELECT od.quantity, m.title, m.price as item_price
+             FROM order_details od
+             JOIN menu m ON od.product_id = m.id
+             WHERE od.order_nr = ?`,
+            [orderId]
+        );
+
+        const createdAt = new Date(orderHeader.order_time);
+        const now = new Date();
+        const minutesPassed = Math.floor((now - createdAt) / 60000);
+        const remainingEta = Math.max(orderHeader.eta - minutesPassed, 0);
+
+        let status = 'brygger';
+        if (remainingEta <= 10 && remainingEta > 0) status = 'Drönare på väg';
+        if (remainingEta === 0) status = 'Levererad';
+
+        res.json({
+            orderNr: orderHeader.order_nr,
+            userId: orderHeader.user_id || 'Gäst',
+            totalPrice: orderHeader.total_price,
+            orderTime: orderHeader.order_time,
+            remainingEta,
+            status,
+            items: orderItems.map(item => ({
+                title: item.title,
+                quantity: item.quantity,
+                price: item.item_price
+            }))
+        });
+
+    } catch (error) {
+        console.error('Failed to get order details:', error);
+        res.status(500).json({ error: 'Misslyckades att hämta orderdetaljer' });
+    }
+});
+
+
 // hämta orderhistorik för en specifik användare
 router.get('/:userId', async (req, res) => {
     const db = req.app.get('db');
