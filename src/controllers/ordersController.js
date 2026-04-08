@@ -34,9 +34,11 @@ export async function createOrder(req, res) {
       minute: '2-digit'
     });
 
+    const orderTimeForDb = now.toISOString();
+
     await db.run(
-        'INSERT INTO orders (order_nr, user_id, total_price, eta) VALUES (?, ?, ?, ?)',
-        [orderNr, resolvedUserId, total, etaInMinutes]
+        'INSERT INTO orders (order_nr, user_id, total_price, eta, order_time) VALUES (?, ?, ?, ?, ?)',
+        [orderNr, resolvedUserId, total, etaInMinutes, orderTimeForDb]
     );
 
     for (const item of items) {
@@ -56,7 +58,7 @@ export async function createOrder(req, res) {
       eta: deliveryTimeString,
     });
   } catch (error) {
-console.error('Failed to create order:', error);
+    console.error('Failed to create order:', error);
     res.status(500).json({ error: 'Failed to process the order.' });
   }
 }
