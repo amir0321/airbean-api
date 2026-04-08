@@ -55,3 +55,131 @@ Rabatter appliceras automatiskt om beställningen innehåller rätt kombination,
 | Kaffelatte  + Ostmacka | Kaffelatte (id: 2) + Ostsmörgås (id: 3) | 10% |
 | Bryggkaffe + Kaffelatte  | Bryggkaffe (id: 1) + Kaffelatte  (id: 2) | 20 kr |
 | Ostmacka + Ostmacka | Ostsmörgås (id: 3) qty > 2  | 29 kr |
+
+---
+
+### `GET /api/beans`
+
+Hämtar hela menyn med alla tillgängliga produkter.
+
+**Request body:**
+Ingen body krävs.
+
+**Response `200`:**
+Returnerar en array med alla produkter från menyn.
+```json
+[
+  {
+    "id": "1",
+    "title": "Bryggkaffe",
+    "description": "Bryggd på nymalda bönor.",
+    "price": 39
+  },
+  {
+    "id": "2",
+    "title": "Caffè Latte",
+    "description": "Klassisk espresso med ångad mjölk.",
+    "price": 49
+  },
+  {
+    "id": "3",
+    "title": "Ostsmörgås",
+    "description": "Smörgås med ost och grönsaker.",
+    "price": 29
+  }
+]
+```
+
+**Felkoder:**
+
+| Kod | Beskrivning |
+|-----|-------------|
+| 500 | Internt serverfel, misslyckades med att hämta menyn. |
+
+---
+
+### `POST /api/users`
+
+Skapar ett nytt användarkonto.
+
+**Request body:**
+```json
+{
+  "username": "Ada Lovelace",
+  "email": "ada@exempel.se"
+}
+```
+
+**Response `201`:**
+Returnerar den nya användarens unika ID.
+```json
+{
+  "message": "Användare skapad",
+  "userId": "d290f1ee-6c54-4b01-90e6-d701748f0851"
+}
+```
+
+**Felkoder:**
+
+| Kod | Beskrivning |
+|-----|-------------|
+| 400 | `username` eller `email` saknas i request body. |
+| 409 | Användarnamn eller e-postadress är redan registrerad. |
+
+---
+
+### `PUT /api/users/:userId`
+
+Uppdaterar en befintlig användares uppgifter.
+
+**URL-parametrar:**
+*   `userId` (string, obligatorisk): Användarens unika ID.
+
+**Request body:**
+Innehåller de fält som ska uppdateras. Minst ett fält måste finnas med.
+```json
+{
+  "username": "Ada Byron",
+  "email": "ada.byron@exempel.se"
+}
+```
+
+**Response `200`:**
+```json
+{
+  "message": "Användaruppgifter uppdaterade"
+}
+```
+
+**Felkoder:**
+
+| Kod | Beskrivning |
+|-----|-------------|
+| 400 | Inga fält att uppdatera skickades med. |
+| 404 | Användare med angivet `userId` hittades inte. |
+| 409 | Det nya användarnamnet eller e-postadressen är redan upptaget. |
+
+---
+
+### `DELETE /api/users/:userId`
+
+Raderar ett användarkonto.
+
+**URL-parametrar:**
+*   `userId` (string, obligatorisk): Användarens unika ID.
+
+**Request body:**
+Ingen body krävs.
+
+**Response `200`:**
+```json
+{
+  "message": "Användare raderad"
+}
+```
+
+**Felkoder:**
+
+| Kod | Beskrivning |
+|-----|-------------|
+| 404 | Användare med angivet `userId` hittades inte. |
