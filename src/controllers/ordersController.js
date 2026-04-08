@@ -56,7 +56,7 @@ export async function createOrder(req, res) {
       eta: deliveryTimeString,
     });
   } catch (error) {
-    console.error('Failed to create order:', error);
+console.error('Failed to create order:', error);
     res.status(500).json({ error: 'Failed to process the order.' });
   }
 }
