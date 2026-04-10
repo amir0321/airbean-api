@@ -264,3 +264,33 @@ Rabatter appliceras automatiskt om beställningen innehåller rätt kombination,
 | Kaffelatte  + Ostmacka | Kaffelatte (id: 2) + Ostsmörgås (id: 3) | 10% |
 | Bryggkaffe + Kaffelatte  | Bryggkaffe (id: 1) + Kaffelatte  (id: 2) | 20 kr |
 | Ostmacka + Ostmacka | Ostsmörgås (id: 3) qty > 2  | 29 kr |
+
+---
+
+### WebSockets
+
+Om WebSockets skulle implementeras i detta projekt skulle det primära användningsområdet vara att ge användaren realtidsuppdateringar om statusen för en lagd beställning.
+
+**Funktionalitet:**
+
+När en användare har lagt en beställning skulle klientapplikationen kunna öppna en WebSocket-anslutning till servern. Servern skulle sedan kunna skicka uppdateringar till klienten i realtid varje gång beställningens status ändras (t.ex. från "brygger" till "Drönare på väg" och slutligen "Levererad").
+
+En möjlig implementation skulle kunna se ut så här:
+1.  Klienten skickar order-ID över WebSocket-anslutningen efter att den har etablerats.
+2.  Servern prenumererar på statusändringar för det specifika order-ID:t.
+3.  När en statusändring sker i backend (t.ex. kaffet är färdigbryggt), skickar servern ett meddelande till klienten med den nya statusen och den uppdaterade beräknade ankomsttiden (ETA).
+
+**Exempel på meddelande från server till klient:**
+```json
+{
+  "orderId": "3d60bba0-0eaa-4673-a6c3-a27b85580b30",
+  "newStatus": "Drönare på väg",
+  "newEta": 10 
+}
+```
+
+**Mervärde:**
+
+*   **Förbättrad användarupplevelse:** Användaren får omedelbar feedback och kan följa sin beställning live utan att behöva uppdatera sidan eller appen manuellt. Detta skapar en mer dynamisk och engagerande upplevelse.
+*   **Minskad serverbelastning:** Istället för att klienten upprepade gånger måste "fråga" servern om en orderstatus (polling) via `GET /api/orders/status/:orderId`, kan servern "putta ut" informationen när den blir tillgänglig. Detta minskar antalet onödiga HTTP-anrop och därmed serverns arbetsbörda.
+*   **Effektivare kommunikation:** WebSockets erbjuder en persistent, tvåvägs kommunikationskanal som är mer effektiv för realtidskommunikation än den traditionella request-response-modellen i HTTP.
